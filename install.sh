@@ -97,6 +97,7 @@ cd /tmp
 
 wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/raw/main/iam.zip
 
+sleep 2
 unzip -o iam.zip -d /
 
 cd /root/
@@ -390,6 +391,13 @@ uci set passwall.@global[0].remote_dns='8.8.4.4'
 uci set passwall.@global[0].dns_mode='udp'
 uci set passwall.@global[0].udp_node='tcp'
 uci commit passwall
+
+uci set network.lan.proto='static'
+uci set network.lan.netmask='255.255.255.0'
+uci set network.lan.ipaddr='192.168.1.1'
+uci set network.lan.delegate='0'
+
+uci commit network
 
 /sbin/reload_config
 
