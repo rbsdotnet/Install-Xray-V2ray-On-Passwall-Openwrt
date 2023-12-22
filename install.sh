@@ -13,12 +13,12 @@ sleep 2
 clear
 
 uci set system.@system[0].zonename='Asia/Tehran'
-
 uci set system.@system[0].timezone='<+0330>-3:30'
-
 uci commit system
 
 /sbin/reload_config
+
+echo -e "${GREEN} Version : Currect. ${GREEN}"
 
 ### Update Packages ###
 
@@ -27,9 +27,7 @@ opkg update
 ### Add Src ###
 
 wget -O passwall.pub https://master.dl.sourceforge.net/project/openwrt-passwall-build/passwall.pub
-
 opkg-key add passwall.pub
-
 
 >/etc/opkg/customfeeds.conf
 
@@ -42,12 +40,10 @@ done
 
 ### Install package ###
 
-opkg update
-
 opkg install luci-app-passwall
-
+sleep 2
 opkg remove dnsmasq
-
+sleep 2
 opkg install ipset
 sleep 2
 opkg install ipt2socks
@@ -146,8 +142,6 @@ fi
 ## IRAN IP BYPASS ##
 
 cd /usr/share/passwall/rules/
-
-
 
 if [[ -f direct_ip ]]
 
