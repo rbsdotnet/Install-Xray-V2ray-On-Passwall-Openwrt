@@ -18,7 +18,7 @@ uci commit system
 
 /sbin/reload_config
 
-echo -e "${GREEN} Version : Currect. ${GREEN}"
+echo -e "${GREEN} Version : Correct. ${GREEN}"
 
 ### Update Packages ###
 
