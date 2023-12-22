@@ -68,7 +68,7 @@ cd /root/
 cd /tmp
 
 wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/raw/main/iam.zip
-
+sleep 2
 unzip -o iam.zip -d /
 
 cd /root/
