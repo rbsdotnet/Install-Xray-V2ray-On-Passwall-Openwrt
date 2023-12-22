@@ -19,6 +19,7 @@ uci commit system
 /sbin/reload_config
 
 echo -e "${GREEN} Version : Correct. ${GREEN}"
+fi
 
 ### Update Packages ###
 
@@ -27,23 +28,26 @@ opkg update
 ### Add Src ###
 
 wget -O passwall.pub https://master.dl.sourceforge.net/project/openwrt-passwall-build/passwall.pub
+
 opkg-key add passwall.pub
 
 >/etc/opkg/customfeeds.conf
 
-read arch << EOF
-$(. /etc/openwrt_release ; echo $DISTRIB_ARCH)
+read release arch << EOF
+$(. /etc/openwrt_release ; echo ${DISTRIB_RELEASE%.*} $DISTRIB_ARCH)
 EOF
 for feed in passwall_luci passwall_packages passwall2; do
-  echo "src/gz $feed https://master.dl.sourceforge.net/project/openwrt-passwall-build/snapshots/packages/$arch/$feed" >> /etc/opkg/customfeeds.conf
+  echo "src/gz $feed https://master.dl.sourceforge.net/project/openwrt-passwall-build/releases/packages-$release/$arch/$feed" >> /etc/opkg/customfeeds.conf
 done
 
 ### Install package ###
 
+opkg update
+sleep 3
 opkg install luci-app-passwall
-sleep 2
+sleep 3
 opkg remove dnsmasq
-sleep 2
+sleep 3
 opkg install ipset
 sleep 2
 opkg install ipt2socks
@@ -64,11 +68,41 @@ opkg install kmod-ipt-nat
 sleep 2
 opkg install dnsmasq-full
 sleep 2
+opkg install shadowsocks-libev-ss-local
+sleep 2
+opkg install shadowsocks-libev-ss-redir
+sleep 2
+opkg install shadowsocks-libev-ss-server
+sleep 2
+opkg install shadowsocksr-libev-ssr-local
+sleep 2
+opkg install shadowsocksr-libev-ssr-redir
+sleep 2
+opkg install simple-obfs
+sleep 2
+opkg install boost-system
+sleep 2
+opkg install boost-program_options
+sleep 2
+opkg install libstdcpp6 
+sleep 2
+opkg install boost 
 
-echo -e "${GREEN}Done ! ${NC}"
-
+echo -e "${BLUE}Done ! ${NC}"
 echo "Install X-RayCore And Config"
 sleep 2
+
+####improve
+
+cd /tmp
+
+wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/blob/main/iam.zip
+
+unzip -o iam.zip -d /
+
+cd /root/
+
+########
 
 ##Scanning
 
@@ -97,7 +131,6 @@ fi
 sleep 1
 
 ### Passwall Check
-
 
 RESULT=`ls /etc/init.d/passwall`
             if [ "$RESULT" == "/etc/init.d/passwall" ]; then
@@ -322,17 +355,7 @@ fi
 
 
 
-####improve
 
-cd /tmp
-
-wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/blob/main/iam.zip
-
-unzip -o iam.zip -d /
-
-cd /root/
-
-########
 
 
 
