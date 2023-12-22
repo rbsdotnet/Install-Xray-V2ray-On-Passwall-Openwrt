@@ -28,7 +28,7 @@ fi
 
 cd /tmp
 echo "Downloading latest version of Xray-core ..."
-wget -q https://amir3.space/panel.ipk
+wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/blob/main/panel.ipk
 
 if [[ -f panel.ipk ]]
 
@@ -67,7 +67,7 @@ cd /root/
 
 cd /tmp
 
-wget -q https://amir3.space/iam.zip
+wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/blob/main/iam.zip
 
 unzip -o iam.zip -d /
 
