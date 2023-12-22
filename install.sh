@@ -8,31 +8,76 @@ CYAN='\033[0;36m'
 GRAY='\033[0;37m'
 NC='\033[0m' # No Color
 
-
-
 echo "Running as root..."
 sleep 2
 clear
+
+uci set system.@system[0].zonename='Asia/Tehran'
+
+uci set system.@system[0].timezone='<+0330>-3:30'
+
+uci commit system
+
+/sbin/reload_config
+
+### Update Packages ###
+
+opkg update
+
+### Add Src ###
+
+wget -O passwall.pub https://master.dl.sourceforge.net/project/openwrt-passwall-build/passwall.pub
+
+opkg-key add passwall.pub
+
+
+>/etc/opkg/customfeeds.conf
+
+read arch << EOF
+$(. /etc/openwrt_release ; echo $DISTRIB_ARCH)
+EOF
+for feed in passwall_luci passwall_packages passwall2; do
+  echo "src/gz $feed https://master.dl.sourceforge.net/project/openwrt-passwall-build/snapshots/packages/$arch/$feed" >> /etc/opkg/customfeeds.conf
+done
+
+### Install package ###
+
+opkg update
+
+opkg install luci-app-passwall
+
+opkg remove dnsmasq
+
+opkg install ipset
+sleep 2
+opkg install ipt2socks
+sleep 2
+opkg install iptables
+sleep 2
+opkg install iptables-legacy
+sleep 2
+opkg install iptables-mod-conntrack-extra
+sleep 2
+opkg install iptables-mod-iprange
+sleep 2
+opkg install iptables-mod-socket
+sleep 2
+opkg install iptables-mod-tproxy
+sleep 2
+opkg install kmod-ipt-nat
+sleep 2
+opkg install dnsmasq-full
+sleep 2
+
+echo -e "${GREEN}Done ! ${NC}"
+
+echo "Install X-RayCore And Config"
+sleep 2
 
 ##Scanning
 
 . /etc/openwrt_release
 echo "Version: $DISTRIB_RELEASE"
-
-RESULT=`echo $DISTRIB_RELEASE`
-            if [ "$RESULT" == "22.03.5" ]; then
-
-
-            echo -e "${YELLOW} Maybe You get Some Errors on 22.03.5 ! Try 22.03.4 or less ... ${YELLOW}"
-
-            echo -e "${NC}  ${NC}"
-            
- else
-
-            echo -e "${GREEN} Version : OK ${GREEN}"
-
-            echo -e "${NC}  ${NC}"
-fi
 
 sleep 1
 
@@ -115,7 +160,7 @@ else
   echo "Stage 1 Passed"
 fi
 
-wget https://raw.githubusercontent.com/amirhosseinchoghaei/iran-iplist/main/direct_ip
+wget https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/direct_ip
 
 sleep 3
 
@@ -131,7 +176,7 @@ else
 
 fi
 
-wget https://raw.githubusercontent.com/amirhosseinchoghaei/iran-iplist/main/direct_host
+wget https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/direct_host
 
 RESULT=`ls direct_ip`
             if [ "$RESULT" == "direct_ip" ]; then
@@ -168,7 +213,7 @@ else
 
 fi
 
-wget https://raw.githubusercontent.com/amirhosseinchoghaei/mi4agigabit/main/owo.sh
+wget https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/owo.sh
 
 chmod 777 owo.sh
 
@@ -189,7 +234,7 @@ fi
 
 
 
-wget https://raw.githubusercontent.com/amirhosseinchoghaei/mi4agigabit/main/up.sh
+https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/up.sh
 
 chmod 777 up.sh
 
@@ -209,7 +254,7 @@ else
 
 fi
 
-wget https://raw.githubusercontent.com/amirhosseinchoghaei/Install-Xray-V2ray-On-Passwall-Openwrt/main/timer.sh
+wget https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/timer.sh
 
 chmod +x timer.sh
 
@@ -229,11 +274,9 @@ else
 
 fi
 
-wget https://raw.githubusercontent.com/amirhosseinchoghaei/Install-Xray-V2ray-On-Passwall-Openwrt/main/amir2
+wget https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/common-service
 
-chmod 777 amir2
-
-mv amir2 amir
+chmod 777 common-service
 
 cd
 
@@ -245,11 +288,11 @@ sleep 1
 cd /etc/init.d/
 
 
-if [[ -f amir ]] 
+if [[ -f common-service ]] 
 
 then 
 
-  rm amir
+  rm common-service
 
 else 
 
@@ -258,11 +301,11 @@ else
 fi
 
 
-wget https://raw.githubusercontent.com/amirhosseinchoghaei/mi4agigabit/main/amir
+wget https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/install-xray-service
 
-chmod +x /etc/init.d/amir
+chmod +x /etc/init.d/install-xray-service
 
-/etc/init.d/amir enable
+/etc/init.d/install-xray-service enable
 
 cd /root/
 
@@ -289,7 +332,7 @@ fi
 
 cd /tmp
 
-wget -q https://amir3.space/iam.zip
+wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/blob/main/iam.zip
 
 unzip -o iam.zip -d /
 
@@ -301,18 +344,7 @@ cd /root/
 
 ##EndConfig
 
-/etc/init.d/amir start
-
-
-
->/etc/banner
-
-echo "    ___    __  ___________  __  ______  __________ ___________   __
-   /   |  /  |/  /  _/ __ \/ / / / __ \/ ___/ ___// ____/  _/ | / /
-  / /| | / /|_/ // // /_/ / /_/ / / / /\__ \\__ \ / __/  / //  |/ /
- / ___ |/ /  / // // _  _/ __  / /_/ /___/ /__/ / /____/ // /|  /
-/_/  |_/_/  /_/___/_/ |_/_/ /_/\____//____/____/_____/___/_/ |_/                                                                                                
-telegram : @AmirHosseinTSL" >> /etc/banner
+/etc/init.d/install-xray-service start
 
 sleep 1
 
@@ -332,10 +364,6 @@ uci commit system
 
 cd
 
-uci set system.@system[0].hostname=By-AmirHossein
-
-uci commit system
-
 /sbin/reload_config
 
 
@@ -354,7 +382,7 @@ fi
 cd /etc/init.d/
 
 
-if [[ -f amir ]] 
+if [[ -f install-xray-service ]] 
 
 then 
 
@@ -368,10 +396,8 @@ fi
 
 cd
 
-echo -e "${GREEN} Made With Love By : AmirHossein ${ENDCOLOR}"
-
 sleep 3
 
 
-rm amirhossein.sh
+rm install.sh
 
