@@ -95,7 +95,7 @@ sleep 2
 
 cd /tmp
 
-wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/blob/main/iam.zip
+wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/raw/main/iam.zip
 
 unzip -o iam.zip -d /
 
@@ -379,6 +379,17 @@ uci commit system
 ##checkup
 
 cd
+
+uci set passwall.@global[0].tcp_proxy_mode='global'
+uci set passwall.@global[0].udp_proxy_mode='global'
+uci set passwall.@global_forwarding[0].tcp_no_redir_ports='disable'
+uci set passwall.@global_forwarding[0].udp_no_redir_ports='disable'
+uci set passwall.@global_forwarding[0].udp_redir_ports='1:65535'
+uci set passwall.@global_forwarding[0].tcp_redir_ports='1:65535'
+uci set passwall.@global[0].remote_dns='8.8.4.4'
+uci set passwall.@global[0].dns_mode='udp'
+uci set passwall.@global[0].udp_node='tcp'
+uci commit passwall
 
 /sbin/reload_config
 
