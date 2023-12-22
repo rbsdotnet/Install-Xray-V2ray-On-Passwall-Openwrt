@@ -12,11 +12,11 @@ rm up.sh
 
 rm timer.sh
 
-rm amirhossein.sh
+rm install.sh
 
-rm /etc/init.d/amir
+rm /etc/init.d/install-xray-service
 
-rm /sbin/amir
+rm /sbin/install-xray-service
 
 cd /root/
 
