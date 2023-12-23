@@ -253,7 +253,7 @@ else
 fi
 
 
-https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/up.sh
+wget https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/up.sh
 
 chmod 777 up.sh
 
