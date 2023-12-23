@@ -67,16 +67,6 @@ opkg install kmod-ipt-nat
 sleep 2
 opkg install dnsmasq-full
 sleep 2
-#opkg install shadowsocks-libev-ss-local
-#sleep 2
-#opkg install shadowsocks-libev-ss-redir
-#sleep 2
-#opkg install shadowsocks-libev-ss-server
-#sleep 2
-#opkg install shadowsocksr-libev-ssr-local
-#sleep 2
-#opkg install shadowsocksr-libev-ssr-redir
-sleep 2
 opkg install simple-obfs
 sleep 2
 opkg install boost-system
