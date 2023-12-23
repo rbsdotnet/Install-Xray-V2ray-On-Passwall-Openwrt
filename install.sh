@@ -170,8 +170,6 @@ fi
 
 #####################
 
-
-
 ## IRAN IP BYPASS ##
 
 cd /usr/share/passwall/rules/
@@ -220,10 +218,7 @@ fi
 sleep 5
 
 
-
 ## Service INSTALL ##
-
-
 
 cd /root/
 
@@ -258,7 +253,6 @@ else
   echo "Stage 4 Passed" 
 
 fi
-
 
 
 https://raw.githubusercontent.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/main/up.sh
@@ -352,12 +346,6 @@ RESULT=`grep -o /tmp/usr/bin/xray /etc/config/passwall`
 
 
 fi
-
-
-
-
-
-
 
 ##EndConfig
 
