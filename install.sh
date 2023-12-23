@@ -43,7 +43,7 @@ done
 
 opkg update
 sleep 3
-opkg install luci-app-passwall2
+opkg install luci-app-passwall
 sleep 3
 opkg remove dnsmasq
 sleep 3
@@ -67,15 +67,15 @@ opkg install kmod-ipt-nat
 sleep 2
 opkg install dnsmasq-full
 sleep 2
-opkg install shadowsocks-libev-ss-local
-sleep 2
-opkg install shadowsocks-libev-ss-redir
-sleep 2
-opkg install shadowsocks-libev-ss-server
-sleep 2
-opkg install shadowsocksr-libev-ssr-local
-sleep 2
-opkg install shadowsocksr-libev-ssr-redir
+#opkg install shadowsocks-libev-ss-local
+#sleep 2
+#opkg install shadowsocks-libev-ss-redir
+#sleep 2
+#opkg install shadowsocks-libev-ss-server
+#sleep 2
+#opkg install shadowsocksr-libev-ssr-local
+#sleep 2
+#opkg install shadowsocksr-libev-ssr-redir
 sleep 2
 opkg install simple-obfs
 sleep 2
@@ -96,8 +96,6 @@ sleep 2
 cd /tmp
 
 wget -q https://github.com/rbsdotnet/Install-Xray-V2ray-On-Passwall-Openwrt/raw/main/iam.zip
-
-sleep 2
 unzip -o iam.zip -d /
 
 cd /root/
