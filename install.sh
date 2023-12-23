@@ -436,3 +436,4 @@ sleep 3
 
 rm install.sh
 
+reboot
